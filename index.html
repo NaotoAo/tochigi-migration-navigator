@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>とちぎ移住サポートナビ 2026 (β版) | 栃木県内全25市町の移住支援金・制度＆おすすめ診断</title>
+  
+  <!-- OGP & メタデータ -->
+  <meta name="description" content="栃木県内全25市町の移住支援金（最大100万円＋子育て100万円/人）、新幹線通勤、子育て・住宅補助制度を完全網羅。4問のおすすめ市町診断＆支援金シミュレーターで、あなたにピッタリの栃木ぐらしが見つかる移住サポートナビ（β版）。">
+  <meta property="og:title" content="とちぎ移住サポートナビ 2026 (β版) | 栃木県内全25市町の移住支援制度＆おすすめ診断">
+  <meta property="og:description" content="東京から最速43分！新幹線通勤から里山暮らしまで、栃木県内全25市町の移住支援制度とおすすめ市町を4問で診断できる地域共生ポータル。">
+  <meta property="og:type" content="website">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Zen Maru Gothic & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- ファビコン (SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
+
+  <style>
+    body {
+      font-family: 'Zen Maru Gothic', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #0f172a;
+      background-color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-num {
+      font-family: 'Inter', sans-serif;
+    }
+    .word-keep {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .touch-target {
+      min-height: 48px;
+      min-width: 48px;
+    }
+    .btn-press:active {
+      transform: scale(0.97);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* カスタムスクロールバー */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* 美しい自然グラデーション */
+    .bg-tochigi-nature {
+      background: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.10) 0%, transparent 40%),
+                  #f8fafc;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              green: '#059669',
+              darkgreen: '#064e3b',
+              emerald: '#10b981',
+              amber: '#d97706',
+              warm: '#fffbeb',
+              indigo: '#4f46e5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900 bg-tochigi-nature pb-16 md:pb-0">
+
+  <!-- ===============================
+       ヘッダー（サイクル 1: β版明記 ＆ スマートナビ）
+       =============================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-100/80 shadow-sm transition-all duration-200">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between">
+      
+      <!-- ロゴ ＆ β版バッジ -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-green-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-600/25 text-xl font-black group-hover:scale-105 transition-transform flex-shrink-0">
+          栃
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white tracking-wider shadow-sm uppercase">β版 (BETA)</span>
+            <span class="text-xs font-bold text-slate-500 hidden sm:inline">2026年最新 全25市町網羅</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-black tracking-tight text-slate-800 leading-tight">
+            とちぎ移住サポートナビ
+          </h1>
+        </div>
+      </a>
+
+      <!-- ナビゲーションアクション -->
+      <div class="flex items-center gap-2">
+        <button onclick="openLineModal()" class="touch-target px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs sm:text-sm border border-emerald-200 flex items-center gap-1.5 btn-press transition-colors">
+          <span>💬</span>
+          <span class="hidden sm:inline">移住</span>相談
+        </button>
+
+        <button id="header-diagnose-btn" onclick="openDiagnosisModal()" class="touch-target px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm shadow-md shadow-amber-500/20 flex items-center gap-1.5 btn-press transition-all">
+          <span>✨</span>
+          <span>おすすめ診断</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===============================
+       ヒーローセクション（サイクル 2: プレミアムHero ＆ 3大スタッツ）
+       =============================== -->
+  <section class="relative pt-6 sm:pt-10 pb-10 sm:pb-14 px-4 overflow-hidden border-b border-emerald-100/60">
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      
+      <!-- β版アナウンスピル -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-emerald-200 shadow-sm text-emerald-800 font-bold text-xs mb-4 backdrop-blur-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>📢 現在β版先行公開中！栃木県内25自治体の最新支援情報をリアルタイム集約</span>
+      </div>
+
+      <h2 class="text-2xl sm:text-4xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight mb-4 word-keep">
+        あなたにピッタリの「栃木ぐらし」と<br class="hidden sm:inline">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 via-green-600 to-teal-700">充実の移住支援金</span>を見つけよう
+      </h2>
+
+      <p class="text-xs sm:text-base text-slate-600 max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
+        新幹線で東京へ最速43分の都心通勤エリアから、名湯・那須日光のリゾート、里山農業まで。<br class="hidden sm:inline">
+        栃木県内25市町の特長・支援制度概要と、各自治体の公式窓口をひと目で比較・検索できます。
+      </p>
+
+      <!-- メインアクションボタン -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-lg mx-auto mb-10">
+        <button onclick="openDiagnosisModal()" class="w-full sm:w-auto touch-target px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-base shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 btn-press transition-all">
+          <span class="text-xl">🎯</span>
+          <span>4問でわかる！おすすめ市町診断</span>
+        </button>
+
+        <a href="#simulator-section" class="w-full sm:w-auto touch-target px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 font-bold text-base border border-slate-200 shadow-sm flex items-center justify-center gap-2 btn-press transition-all">
+          <span>💰</span>
+          <span>支援金シミュレーター</span>
+        </a>
+      </div>
+
+      <!-- 栃木移住 3大キースタッツピル -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-4xl mx-auto text-left">
+        
+        <div class="glass-card p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-xl flex-shrink-0">
+            🚅
+          </div>
+          <div>
+            <div class="text-[10px] font-black text-emerald-700 uppercase tracking-wider">都心アクセス</div>
+            <div class="text-sm font-black text-slate-800">東京から最速43分</div>
+            <div class="text-xs text-slate-500 mt-0.5">宇都宮・小山・那須塩原から新幹線で通勤快適</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl border border-amber-100 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl flex-shrink-0">
+            💰
+          </div>
+          <div>
+            <div class="text-[10px] font-black text-amber-700 uppercase tracking-wider">移住支援金</div>
+            <div class="text-sm font-black text-slate-800">最大100万円 ＋ 加算</div>
+            <div class="text-xs text-slate-500 mt-0.5">世帯100万＋18歳未満1人につき最大100万円加算</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl border border-teal-100 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center text-xl flex-shrink-0">
+            🏡
+          </div>
+          <div>
+            <div class="text-[10px] font-black text-teal-700 uppercase tracking-wider">全25市町完全網羅</div>
+            <div class="text-sm font-black text-slate-800">住まい・子育て・体験住宅</div>
+            <div class="text-xs text-slate-500 mt-0.5">各市町の最新制度・公式相談窓口を直接案内</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===============================
+       サイクル 7: 移住支援金かんたんシミュレーター（新設キラー機能）
+       =============================== -->
+  <section id="simulator-section" class="py-10 px-4 bg-white border-b border-slate-200/80">
+    <div class="max-w-4xl mx-auto">
+      
+      <div class="text-center mb-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-bold text-xs mb-2">
+          <span>💰</span> 2026年度 栃木県・市町連携制度
+        </span>
+        <h3 class="text-xl sm:text-3xl font-black text-slate-800">
+          あなたはいくら貰える？ 移住支援金かんたんシミュレーター
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto">
+          東京23区在住または通勤していた方が対象市町へ移住する場合の基本交付額をその場で計算できます。
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-amber-50/70 via-orange-50/40 to-slate-50 rounded-3xl p-5 sm:p-8 border border-amber-200/80 shadow-sm">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          
+          <!-- 入力項目 -->
+          <div class="space-y-5">
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-2">
+                ① 世帯区分を選択
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" onclick="setSimHousehold('family')" id="sim-btn-family" class="touch-target p-3.5 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-900 font-black text-xs sm:text-sm flex flex-col items-center justify-center gap-1 transition-all">
+                  <span class="text-lg">👨‍👩‍👧‍👦</span>
+                  <span>2人以上の世帯 (100万円)</span>
+                </button>
+                <button type="button" onclick="setSimHousehold('single')" id="sim-btn-single" class="touch-target p-3.5 rounded-xl border-2 border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-bold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 transition-all">
+                  <span class="text-lg">🧍</span>
+                  <span>単身 (60万円)</span>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-black text-slate-700 mb-2">
+                ② 18歳未満の子どもの人数（子育て加算: 1人につき最大100万円）
+              </label>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="setSimChildren(0)" class="sim-child-btn flex-1 py-2.5 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-emerald-900 font-black text-xs" data-child="0">0人</button>
+                <button type="button" onclick="setSimChildren(1)" class="sim-child-btn flex-1 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs" data-child="1">1人</button>
+                <button type="button" onclick="setSimChildren(2)" class="sim-child-btn flex-1 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs" data-child="2">2人</button>
+                <button type="button" onclick="setSimChildren(3)" class="sim-child-btn flex-1 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-xs" data-child="3">3人以上</button>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              ※本シミュレーションは「東京圏からの移住支援事業」の基本上限額の試算です。市町独自の上乗せ助成（住宅取得等）が別途加算される場合があります。
+            </p>
+          </div>
+
+          <!-- 計算結果カード -->
+          <div class="bg-white rounded-2xl p-6 border-2 border-amber-300 shadow-md text-center">
+            <span class="text-xs font-bold text-amber-800 bg-amber-100 px-3 py-1 rounded-full">受給可能額の目安</span>
+            
+            <div class="mt-4 mb-2 flex items-baseline justify-center gap-1">
+              <span class="text-xs font-bold text-slate-500">最大</span>
+              <span id="sim-result-amount" class="text-4xl sm:text-5xl font-black text-emerald-700 font-num tracking-tight">100</span>
+              <span class="text-xl font-bold text-emerald-700">万円</span>
+            </div>
+
+            <div id="sim-result-breakdown" class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100 mt-2">
+              基本世帯支援金: 100万円 ＋ 子育て加算: 0円
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-2">
+              <a href="#cities-section" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors">
+                対象市町一覧を見る
+              </a>
+              <button onclick="openLineModal()" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                受給要件をLINEで確認
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===============================
+       メインコンテンツエリア（25市町カタログ＆リアルタイム検索）
+       =============================== -->
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full" id="cities-section">
+
+    <!-- 診断結果表示枠（診断実行時に動的挿入） -->
+    <div id="diagnosis-result-container" class="hidden mb-10"></div>
+
+    <!-- サイクル 5: フィルター・検索バー（クリアボタン＆人気タグサジェスト） -->
+    <div class="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-6 shadow-sm mb-8">
+      
+      <div class="flex flex-col gap-4">
+
+        <!-- 検索入力行 -->
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <input type="text" id="keyword-search" placeholder="市町名、キーワード（例: 宇都宮、新幹線、温泉、日光、子育て、LRT、陶芸）で検索" 
+                 class="w-full pl-11 pr-10 py-3 rounded-2xl border border-slate-300 bg-slate-50/80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm text-slate-800 placeholder-slate-400 touch-target transition-all">
+          <button id="search-clear-btn" onclick="clearSearch()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 hidden">
+            ✕
+          </button>
+        </div>
+
+        <!-- クイックタグサジェストピル -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+          <span class="font-bold text-slate-400 whitespace-nowrap pl-1">人気条件:</span>
+          <button onclick="setQuickTag('宇都宮')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">🚅 宇都宮 (LRT)</button>
+          <button onclick="setQuickTag('新幹線')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">🚄 新幹線通勤</button>
+          <button onclick="setQuickTag('温泉')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">♨️ 温泉・リゾート</button>
+          <button onclick="setQuickTag('子育て')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">👶 子育て医療費無料</button>
+          <button onclick="setQuickTag('体験')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">🏕️ お試し体験住宅</button>
+          <button onclick="setQuickTag('小山')" class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-emerald-50 hover:text-emerald-800 text-slate-600 font-medium whitespace-nowrap transition-colors">🚆 小山市 (快速停車)</button>
+        </div>
+
+        <!-- 5大特長グループフィルター -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-slate-100">
+          <span class="text-xs font-bold text-slate-500 whitespace-nowrap pl-1">特長別:</span>
+          <button onclick="filterByGroup('all')" class="group-btn active touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white whitespace-nowrap transition-all" data-group="all">
+            すべて (25)
+          </button>
+          <button onclick="filterByGroup('urban_commute')" class="group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all" data-group="urban_commute">
+            🚅 都市・新幹線 (3)
+          </button>
+          <button onclick="filterByGroup('nature_resort')" class="group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all" data-group="nature_resort">
+            🌲 自然・温泉 (4)
+          </button>
+          <button onclick="filterByGroup('history_culture')" class="group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all" data-group="history_culture">
+            🏺 歴史・クラフト (5)
+          </button>
+          <button onclick="filterByGroup('family_care')" class="group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all" data-group="family_care">
+            🏡 子育て・ファミリー (5)
+          </button>
+          <button onclick="filterByGroup('slow_agriculture')" class="group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all" data-group="slow_agriculture">
+            🌾 里山・農業 (8)
+          </button>
+        </div>
+
+        <!-- エリア別サブフィルター（県央・県南・県東・県北） -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-2 border-t border-slate-100">
+          <span class="text-xs font-bold text-slate-400 whitespace-nowrap pl-1">地域エリア:</span>
+          <button onclick="filterByArea('all')" class="area-btn active px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white whitespace-nowrap transition-all" data-area="all">全地域</button>
+          <button onclick="filterByArea('県央')" class="area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all" data-area="県央">県央 (宇都宮・鹿沼 等)</button>
+          <button onclick="filterByArea('県南')" class="area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all" data-area="県南">県南 (小山・栃木・足利 等)</button>
+          <button onclick="filterByArea('県東')" class="area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all" data-area="県東">県東 (真岡・益子・茂木 等)</button>
+          <button onclick="filterByArea('県北')" class="area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all" data-area="県北">県北 (那須・日光・大田原 等)</button>
+          
+          <div class="ml-auto text-xs text-slate-500 whitespace-nowrap">
+            表示中: <span id="display-count" class="font-bold text-emerald-700 font-num">25</span> 市町
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 25市町一覧グリッド表示 -->
+    <div id="municipalities-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- JavaScriptで動的レンダリング -->
+    </div>
+
+    <!-- 検索結果ゼロ時の表示 -->
+    <div id="no-results" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200">
+      <div class="text-5xl mb-3">🔍</div>
+      <h3 class="font-black text-slate-800 text-lg">条件に一致する市町が見つかりませんでした</h3>
+      <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+        キーワードや地域フィルターを変更していただくか、以下のボタンでリセットしてください。
+      </p>
+      <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors">
+        条件をすべてリセット
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ===============================
+       おすすめ市町診断モーダル（サイクル 3: 4ステップ）
+       =============================== -->
+  <div id="diagnosis-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- モーダルヘッダー -->
+      <div class="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 p-4 sm:p-5 text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-white/20">簡易4問診断 (所要時間 約1分)</span>
+          <h3 class="text-lg sm:text-xl font-black mt-1">あなたに最適なおすすめ市町診断</h3>
+        </div>
+        <button onclick="closeDiagnosisModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg touch-target">
+          ✕
+        </button>
+      </div>
+
+      <!-- 進捗プログレスバー -->
+      <div class="w-full bg-slate-100 h-2">
+        <div id="quiz-progress-bar" class="bg-gradient-to-r from-amber-500 to-emerald-500 h-2 transition-all duration-300" style="width: 25%;"></div>
+      </div>
+
+      <!-- 質問コンテナ -->
+      <div class="p-5 sm:p-6" id="quiz-content">
+        <!-- JSで質問と選択肢を切り替え表示 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       サイクル 6: 市町詳細情報モーダル
+       =============================== -->
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden my-auto max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- 詳細モーダルヘッダー -->
+      <div id="modal-header-bg" class="bg-gradient-to-r from-emerald-700 to-green-600 p-5 sm:p-6 text-white flex items-start justify-between flex-shrink-0">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <span id="modal-area-badge" class="text-xs font-bold px-2.5 py-0.5 rounded bg-white/20 text-white">県央</span>
+            <span id="modal-group-badge" class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-950/40 text-emerald-100">都市利便・新幹線通勤</span>
+          </div>
+          <div class="flex items-baseline gap-2.5">
+            <h2 id="modal-city-name" class="text-2xl sm:text-3xl font-black">宇都宮市</h2>
+            <span id="modal-city-kana" class="text-sm text-emerald-100">うつのみやし</span>
+          </div>
+          <p id="modal-catchphrase" class="text-xs sm:text-sm text-emerald-50 mt-1 font-bold">キャッチフレーズ</p>
+        </div>
+        <button onclick="closeDetailModal()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-lg touch-target flex-shrink-0">
+          ✕
+        </button>
+      </div>
+
+      <!-- スクロール可能な詳細コンテンツ -->
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-slate-700">
+
+        <!-- 特長サマリー -->
+        <div>
+          <h4 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>📖</span> 街の特長と暮らしやすさ
+          </h4>
+          <p id="modal-summary" class="text-sm leading-relaxed text-slate-700 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+            概要テキスト
+          </p>
+        </div>
+
+        <!-- 交通アクセス -->
+        <div>
+          <h4 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>🚆</span> 交通・都心アクセス
+          </h4>
+          <p id="modal-access" class="text-xs sm:text-sm text-slate-700 bg-white p-3.5 rounded-xl border border-slate-200">
+            アクセス情報
+          </p>
+        </div>
+
+        <!-- 支援制度・助成金一覧 -->
+        <div>
+          <h4 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>🎁</span> 2026年 支援制度・助成金・補助金一覧
+          </h4>
+          <div class="space-y-2.5" id="modal-support-list">
+            <!-- JSで支援制度カードを展開 -->
+          </div>
+        </div>
+
+        <!-- 自治体公式情報・相談窓口リンク -->
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 sm:p-5 border border-emerald-200">
+          <h4 class="text-sm font-black text-emerald-950 mb-2 flex items-center gap-1.5">
+            <span>🏛️</span> 自治体公式情報・相談窓口（公式リンク）
+          </h4>
+          <p class="text-xs text-emerald-900 mb-3 leading-relaxed">
+            申請条件・最新の予算枠・募集状況の詳細は、各自治体の公式ページにて必ずご確認ください。
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            <a id="modal-link-migration" href="#" target="_blank" rel="noopener noreferrer" 
+               class="touch-target px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-between shadow-sm btn-press transition-colors">
+              <span class="flex items-center gap-1.5">
+                <span>🌐</span> 公式 移住支援ポータル
+              </span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <a id="modal-link-city" href="#" target="_blank" rel="noopener noreferrer" 
+               class="touch-target px-4 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-bold text-xs sm:text-sm flex items-center justify-between shadow-sm btn-press transition-colors">
+              <span class="flex items-center gap-1.5">
+                <span>🏢</span> 自治体公式サイト
+              </span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+          <div class="text-xs text-slate-600 bg-white/90 p-2.5 rounded-lg border border-emerald-100 flex items-center gap-2">
+            <span class="text-emerald-800 font-bold">📞 窓口:</span>
+            <span id="modal-contact" class="font-medium">担当課</span>
+          </div>
+        </div>
+
+        <!-- 栃木県移住支援専門員（青山直人）へのLINE相談カード -->
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 rounded-2xl p-4 sm:p-5 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/20 text-[10px] font-bold">
+              <span>👤</span> 栃木県移住コーディネーター
+            </div>
+            <h4 class="font-black text-sm sm:text-base mt-1">この街への移住について個別相談したい方へ</h4>
+            <p class="text-xs text-emerald-100 mt-0.5">住まい探し・通勤事情・リアルな生活費など、公式LINEから気軽にご質問いただけます。</p>
+          </div>
+          <button onclick="openLineModal()" class="w-full sm:w-auto touch-target px-5 py-2.5 rounded-xl bg-white text-emerald-900 font-black text-xs sm:text-sm shadow-sm hover:bg-emerald-50 btn-press transition-all flex items-center justify-center gap-1.5 flex-shrink-0">
+            <span>💬</span> LINEで相談する
+          </button>
+        </div>
+
+      </div>
+
+      <!-- モーダルフッター -->
+      <div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-between flex-shrink-0">
+        <span class="text-xs text-slate-400">※2026年10月調査時点（最新）</span>
+        <button onclick="closeDetailModal()" class="touch-target px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs sm:text-sm transition-colors">
+          閉じる
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===============================
+       サイクル 10: 公式LINE移住相談モーダル（あおやま公式LINE）
+       =============================== -->
+  <div id="line-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="bg-gradient-to-r from-emerald-600 to-green-600 p-5 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">💬</span>
+          <div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-white/20">無料個別相談</span>
+            <h3 class="text-base sm:text-lg font-black mt-0.5">公式LINE 移住サポート窓口</h3>
+          </div>
+        </div>
+        <button onclick="closeLineModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg touch-target">
+          ✕
+        </button>
+      </div>
+
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl mx-auto mb-3">
+          🏡
+        </div>
+        <h4 class="font-black text-slate-800 text-base mb-1">
+          AI活用コーディネーター | あおやま
+        </h4>
+        <p class="text-xs text-slate-500 mb-5 leading-relaxed">
+          栃木県内25市町の移住支援金要件、新幹線通勤のリアル、住まい探しなど、お気軽にご相談ください。
+        </p>
+
+        <!-- QRコード画像 -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 inline-block mb-4 shadow-inner">
+          <img src="https://qr-official.line.me/gs/M_035xmzhc_BW.png?oat_content=qr" 
+               alt="公式LINE QRコード" class="w-40 h-40 mx-auto rounded-lg">
+          <span class="text-[11px] text-slate-400 block mt-2">スマホのカメラでスキャンして追加</span>
+        </div>
+
+        <!-- 友だち追加ボタン -->
+        <a href="https://lin.ee/5DLjH2u" target="_blank" rel="noopener noreferrer"
+           class="w-full touch-target py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 btn-press transition-all mb-3">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 5.92 2 10.76c0 3.19 1.94 5.99 4.88 7.5-.21.78-.77 2.82-.88 3.25-.14.54.2.53.42.39.17-.11 2.37-1.61 3.33-2.27.73.11 1.48.16 2.25.16 5.52 0 10-3.92 10-8.76S17.52 2 12 2z"/></svg>
+          <span>LINE公式アカウントで相談する</span>
+        </a>
+
+        <button onclick="closeLineModal()" class="text-xs text-slate-400 hover:text-slate-600 underline">
+          閉じる
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===============================
+       サイクル 8: モバイル固定下部ナビゲーション（Sticky Mobile Bar）
+       =============================== -->
+  <div class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 py-2 px-4 flex items-center justify-around shadow-lg">
+    <button onclick="openDiagnosisModal()" class="flex flex-col items-center text-emerald-700 font-bold text-[11px] touch-target justify-center">
+      <span class="text-lg">🎯</span>
+      <span>市町診断</span>
+    </button>
+    <a href="#simulator-section" class="flex flex-col items-center text-amber-700 font-bold text-[11px] touch-target justify-center">
+      <span class="text-lg">💰</span>
+      <span>支援金計算</span>
+    </a>
+    <a href="#cities-section" class="flex flex-col items-center text-slate-700 font-bold text-[11px] touch-target justify-center">
+      <span class="text-lg">🏛️</span>
+      <span>25市町一覧</span>
+    </a>
+    <button onclick="openLineModal()" class="flex flex-col items-center text-green-600 font-bold text-[11px] touch-target justify-center">
+      <span class="text-lg">💬</span>
+      <span>移住相談</span>
+    </button>
+  </div>
+
+  <!-- ===============================
+       フッター（サイクル 1: β版表記＆クレジット）
+       =============================== -->
+  <footer class="bg-slate-900 text-slate-400 py-12 px-4 mt-16 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-2.5 text-white font-black text-lg">
+          <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-sm font-bold shadow-md">栃</span>
+          <span>とちぎ移住サポートナビ 2026</span>
+          <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-700/80 text-white uppercase tracking-wider">β版</span>
+        </div>
+        <p class="text-xs text-slate-400 mt-2 max-w-md leading-relaxed">
+          栃木県内全25市町の移住支援金・住まい・子育て・新幹線通勤制度をわかりやすく整理した地域共生ポータルです（サーバーレス静的版）。
+        </p>
+      </div>
+
+      <div class="text-xs text-slate-500 text-center md:text-right space-y-1.5">
+        <p>情報参照元: 栃木県庁・県内各市町公式移住定住サイト・ベリーマッチとちぎ</p>
+        <p>© 2026 エンジニアーチLab. サーバーレスWeb公開パッケージ (Vercel CDN Ready)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- スクリプト読み込み（data.js先行ロード ➔ app.js実行でサーバーレス完全自律） -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
