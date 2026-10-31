@@ -131,7 +131,7 @@ function renderMunicipalities() {
     }
     // キーワード検索（部分一致）
     if (currentSearchQuery) {
-      const targetStr = `${item.name} ${item.kana} ${item.catchphrase} ${item.summary} ${item.access} ${(item.tags || []).join(' ')} ${item.sub_feature || ''} ${JSON.stringify(item.support_programs)}`.toLowerCase();
+      const targetStr = `${item.name} ${item.kana} ${item.catchphrase} ${item.summary} ${item.access} ${(item.tags || []).join(' ')} ${item.sub_feature || ''} ${item.fair_booth || ''} ${JSON.stringify(item.support_programs)}`.toLowerCase();
       if (!targetStr.includes(currentSearchQuery)) {
         return false;
       }
@@ -154,9 +154,11 @@ function renderMunicipalities() {
   (appData.groups || []).forEach(g => { groupMap[g.id] = g; });
 
   const areaColorMap = {
-    '県央': 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    '県南': 'bg-blue-100 text-blue-800 border-blue-200',
+    '日光': 'bg-sky-100 text-sky-800 border-sky-200',
+    '那須': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    '県央': 'bg-teal-100 text-teal-800 border-teal-200',
     '県東': 'bg-amber-100 text-amber-800 border-amber-200',
+    '県南': 'bg-blue-100 text-blue-800 border-blue-200',
     '県北': 'bg-purple-100 text-purple-800 border-purple-200'
   };
 
@@ -167,12 +169,20 @@ function renderMunicipalities() {
     return `
       <div class="bg-white rounded-3xl border border-slate-200/90 hover:border-emerald-300 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
         <div>
-          <!-- 上部バッジ（エリア ＆ 特長グループ） -->
+          <!-- 上部バッジ（エリア ＆ フェア出展ブース ＆ 特長グループ） -->
           <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${areaClass}">
-              ${city.area}
-            </span>
-            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg flex items-center gap-1">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${areaClass}">
+                ${city.area}
+              </span>
+              ${city.fair_booth ? `
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1" title="オールとちぎ移住＆しごとフェア2026 出展ブース">
+                  <span>🎪</span>
+                  <span>${city.fair_booth}</span>
+                </span>
+              ` : ''}
+            </div>
+            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-lg flex items-center gap-1 flex-shrink-0">
               <span>${group.icon || '🏷️'}</span>
               <span>${group.name ? group.name.replace('グループ', '') : ''}</span>
             </span>
@@ -192,39 +202,17 @@ function renderMunicipalities() {
           </div>
 
           <!-- 特長サマリー -->
-          <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-100">
+          <p class="text-xs text-slate-600 leading-relaxed line-clamp-4 mb-4 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 flex-1">
             ${city.summary}
           </p>
-
-          <!-- 支援金ハイライト -->
-          <div class="space-y-2 text-xs text-slate-700 mb-5">
-            <div class="flex items-start gap-1.5">
-              <span class="text-emerald-700 font-bold flex-shrink-0">💰 移住支援:</span>
-              <span class="font-medium text-slate-800 line-clamp-1">${city.support_programs.relocation_grant.split('＋')[0]}</span>
-            </div>
-            <div class="flex items-start gap-1.5">
-              <span class="text-blue-600 font-bold flex-shrink-0">🏡 住まい:</span>
-              <span class="text-slate-600 line-clamp-1">${city.support_programs.housing_support || '各種補助制度あり'}</span>
-            </div>
-            <div class="flex items-start gap-1.5">
-              <span class="text-amber-600 font-bold flex-shrink-0">👶 子育て:</span>
-              <span class="text-slate-600 line-clamp-1">${city.support_programs.child_care || '医療費助成等あり'}</span>
-            </div>
-            ${city.support_programs.commute_support ? `
-              <div class="flex items-start gap-1.5">
-                <span class="text-indigo-600 font-bold flex-shrink-0">🚅 通勤:</span>
-                <span class="text-slate-600 line-clamp-1">${city.support_programs.commute_support}</span>
-              </div>
-            ` : ''}
-          </div>
         </div>
 
         <!-- アクションボタン -->
         <div class="pt-3.5 border-t border-slate-100 flex items-center gap-2 mt-auto">
           <button onclick="openDetailModal('${city.id}')" class="flex-1 touch-target px-3.5 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs sm:text-sm border border-emerald-200 flex items-center justify-center gap-1.5 btn-press transition-colors">
-            <span>📖 特長・制度詳細</span>
+            <span>📖 詳細を確認する</span>
           </button>
-          <a href="${city.official_urls.migration_page}" target="_blank" rel="noopener noreferrer" class="touch-target px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center gap-1 btn-press transition-colors" title="自治体公式移住ページへ">
+          <a href="${city.official_urls.migration_page}" target="_blank" rel="noopener noreferrer" class="touch-target px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center gap-1 btn-press transition-colors" title="${city.name}公式 移住支援ポータルへ">
             <span>公式</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
@@ -243,9 +231,9 @@ function filterByGroup(groupId) {
   currentGroupFilter = groupId;
   document.querySelectorAll('.group-btn').forEach(btn => {
     if (btn.getAttribute('data-group') === groupId) {
-      btn.className = 'group-btn active touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white whitespace-nowrap transition-all shadow-sm';
+      btn.className = 'group-btn active px-3 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white whitespace-nowrap transition-all shadow-sm flex-shrink-0';
     } else {
-      btn.className = 'group-btn touch-target px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all';
+      btn.className = 'group-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all flex-shrink-0';
     }
   });
   renderMunicipalities();
@@ -255,9 +243,9 @@ function filterByArea(area) {
   currentAreaFilter = area;
   document.querySelectorAll('.area-btn').forEach(btn => {
     if (btn.getAttribute('data-area') === area) {
-      btn.className = 'area-btn active px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white whitespace-nowrap transition-all shadow-sm';
+      btn.className = 'area-btn active px-3 py-1 rounded-lg text-xs font-bold bg-slate-800 text-white whitespace-nowrap transition-all shadow-sm flex-shrink-0';
     } else {
-      btn.className = 'area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all';
+      btn.className = 'area-btn px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-600 whitespace-nowrap transition-all flex-shrink-0';
     }
   });
   renderMunicipalities();
@@ -504,6 +492,11 @@ function renderDiagnosisBanner(result) {
                     <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
                       ${city.area}
                     </span>
+                    ${city.fair_booth ? `
+                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
+                        🎪 ${city.fair_booth}
+                      </span>
+                    ` : ''}
                     <h5 class="font-black text-base sm:text-lg text-slate-900">
                       ${city.name}
                     </h5>
@@ -514,17 +507,30 @@ function renderDiagnosisBanner(result) {
                     <span class="text-amber-500 font-black">👉</span>
                     <span>さらに「<span class="text-emerald-700 underline decoration-emerald-400 decoration-2">${city.sub_feature}</span>」</span>
                   </div>
-                  <p class="text-xs text-slate-600 mt-1 line-clamp-1">
-                    💰 移住支援金: ${city.support_programs.relocation_grant.split('＋')[0]}
-                  </p>
+                  <!-- Why This City? 推薦理由（野尻社長ご提案反映） -->
+                  ${city.why_reasons && city.why_reasons.length ? `
+                    <div class="mt-2.5 p-2.5 sm:p-3 bg-amber-50/90 rounded-xl border border-amber-200/80">
+                      <div class="text-[11px] font-black text-amber-950 mb-1 flex items-center gap-1">
+                        <span>💡</span> おすすめの理由（Why This City?）:
+                      </div>
+                      <ul class="space-y-1">
+                        ${city.why_reasons.map(r => `
+                          <li class="text-xs text-slate-700 font-medium flex items-start gap-1.5">
+                            <span class="text-amber-500 font-black">•</span>
+                            <span>${r}</span>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    </div>
+                  ` : ''}
                 </div>
 
-                <div class="flex items-center gap-2 w-full md:w-auto flex-shrink-0">
-                  <button onclick="openDetailModal('${city.id}')" class="flex-1 md:flex-initial touch-target px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-sm transition-colors">
-                    詳細を見る
+                <div class="flex flex-col sm:flex-row md:flex-col lg:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto flex-shrink-0">
+                  <button onclick="openDetailModal('${city.id}')" class="touch-target px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-sm transition-colors text-center">
+                    詳細を確認する
                   </button>
-                  <a href="${city.official_urls.migration_page}" target="_blank" rel="noopener noreferrer" class="touch-target px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1 transition-colors">
-                    <span>公式HP</span>
+                  <a href="${city.official_urls.migration_page}" target="_blank" rel="noopener noreferrer" class="touch-target px-3.5 py-2.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 font-bold text-xs flex items-center justify-center gap-1 transition-colors" title="${city.name}公式 移住支援ポータルへ">
+                    <span>公式</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                   </a>
                 </div>
@@ -548,7 +554,7 @@ function renderDiagnosisBanner(result) {
 }
 
 /**
- * サイクル 6: 市町詳細モーダルの表示
+ * サイクル 6: 市町詳細モーダルの表示（オールとちぎ2026公式連携版）
  */
 function openDetailModal(cityId) {
   if (!appData || !appData.municipalities) return;
@@ -559,7 +565,7 @@ function openDetailModal(cityId) {
   (appData.groups || []).forEach(g => { groupMap[g.id] = g; });
   const group = groupMap[city.group_id] || {};
 
-  document.getElementById('modal-area-badge').textContent = city.area;
+  document.getElementById('modal-area-badge').textContent = city.fair_booth ? `${city.area}エリア（フェア出展: ${city.fair_booth}）` : city.area;
   document.getElementById('modal-group-badge').textContent = group.name || '';
   document.getElementById('modal-city-name').textContent = city.name;
   document.getElementById('modal-city-kana').textContent = city.kana;
@@ -568,32 +574,31 @@ function openDetailModal(cityId) {
   document.getElementById('modal-access').textContent = city.access;
   document.getElementById('modal-contact').textContent = city.contact;
 
+  // 1. 公式 移住支援ポータル（オールとちぎ掲載HP）
   document.getElementById('modal-link-migration').href = city.official_urls.migration_page;
+  // 2. 自治体公式サイト（各自治体トップページ）
   document.getElementById('modal-link-city').href = city.official_urls.city_home;
 
-  const supportList = document.getElementById('modal-support-list');
-  const sp = city.support_programs;
+  // オールとちぎ2026公式 4大紹介コンテンツ（生活・交通、医療・福祉、子育て・教育、その他）＆出典元リンク
+  const intro = city.alltochigi_intro || {};
 
-  const items = [
-    { title: '栃木県・市町連携 移住支援金', value: sp.relocation_grant, icon: '💰', color: 'border-l-4 border-emerald-500' },
-    { title: '住宅取得・リフォーム補助', value: sp.housing_support, icon: '🏡', color: 'border-l-4 border-blue-500' },
-    { title: '子育て・子ども医療費助成', value: sp.child_care, icon: '👶', color: 'border-l-4 border-amber-500' },
-    sp.commute_support ? { title: '新幹線・通勤定期補助', value: sp.commute_support, icon: '🚅', color: 'border-l-4 border-indigo-500' } : null,
-    sp.trial_living ? { title: 'お試し移住・暮らし体験', value: sp.trial_living, icon: '🏕️', color: 'border-l-4 border-teal-500' } : null,
-    sp.work_support ? { title: '就業・起業・就農支援', value: sp.work_support, icon: '💼', color: 'border-l-4 border-purple-500' } : null
-  ].filter(Boolean);
+  const lifeTrafficEl = document.getElementById('modal-life-traffic');
+  if (lifeTrafficEl) lifeTrafficEl.textContent = intro.life_traffic || '生活・交通情報を準備中です。';
 
-  supportList.innerHTML = items.map(item => `
-    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 ${item.color}">
-      <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-1">
-        <span>${item.icon}</span>
-        <span>${item.title}</span>
-      </div>
-      <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-        ${item.value}
-      </p>
-    </div>
-  `).join('');
+  const medicalWelfareEl = document.getElementById('modal-medical-welfare');
+  if (medicalWelfareEl) medicalWelfareEl.textContent = intro.medical_welfare || '医療・福祉情報を準備中です。';
+
+  const childcareEduEl = document.getElementById('modal-childcare-education');
+  if (childcareEduEl) childcareEduEl.textContent = intro.childcare_education || '子育て・教育情報を準備中です。';
+
+  const otherEl = document.getElementById('modal-other');
+  if (otherEl) otherEl.textContent = intro.other || 'その他支援情報を準備中です。';
+
+  const sourceLinkEl = document.getElementById('modal-alltochigi-source-link');
+  if (sourceLinkEl) sourceLinkEl.href = intro.source_url || city.official_urls.alltochigi_url || 'https://www.tochigi-iju.jp/alltochigi2026/municipality/';
+
+  const sourceTextEl = document.getElementById('modal-alltochigi-source-text');
+  if (sourceTextEl) sourceTextEl.textContent = `${city.name}の公式紹介ページを確認する`;
 
   const modal = document.getElementById('detail-modal');
   if (modal) modal.classList.remove('hidden');

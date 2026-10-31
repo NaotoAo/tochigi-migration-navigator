@@ -1,5 +1,7 @@
 # とちぎ移住サポートナビ 2026 (β版)
 
+**🌐 本番公開URL:** [https://tochigi-migration-navigator.vercel.app/](https://tochigi-migration-navigator.vercel.app/)
+
 栃木県内全25市町の移住支援金・住まい・子育て・新幹線通勤制度を完全網羅した、サーバーレス静的Webアプリケーションです。
 
 ## 特徴
