@@ -610,7 +610,7 @@ function closeDetailModal() {
 }
 
 /**
- * サイクル 10: 公式LINE移住相談モーダル
+ * サイクル 10: 公式LINEしごと相談モーダル（株式会社アーチ公式LINE）
  */
 function openLineModal() {
   const modal = document.getElementById('line-modal');
